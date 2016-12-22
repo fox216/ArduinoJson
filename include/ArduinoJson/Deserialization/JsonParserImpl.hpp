@@ -134,7 +134,7 @@ inline bool ArduinoJson::Internals::JsonParser::parseObjectTo(
 }
 
 inline const char *ArduinoJson::Internals::JsonParser::parseString() {
-  const char *str = _writer.startString();
+  StringWriter::String str = _writer.startString();
 
   char c = _reader.peek();
 
@@ -155,19 +155,18 @@ inline const char *ArduinoJson::Internals::JsonParser::parseString() {
         _reader.skip();
       }
 
-      _writer.append(c);
+      str.append(c);
     }
   } else {  // no quotes
     for (;;) {
       if (!isLetterOrNumber(c)) break;
       _reader.skip();
-      _writer.append(c);
+      str.append(c);
       c = _reader.peek();
     }
   }
 
-  _writer.stopString();
-  return str;
+  return str.c_str();
 }
 
 inline bool ArduinoJson::Internals::JsonParser::parseStringTo(
