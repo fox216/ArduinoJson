@@ -20,3 +20,16 @@ TEST(StaticJsonBuffer_String_Tests, WorksWhenBufferIsBigEnough) {
 
   ASSERT_STREQ("hello", str.c_str());
 }
+
+TEST(StaticJsonBuffer_String_Tests, ReturnsNullWhenTooSmall) {
+  StaticJsonBuffer<5> jsonBuffer;
+
+  StaticJsonBufferBase::String str = jsonBuffer.startString();
+  str.append('h');
+  str.append('e');
+  str.append('l');
+  str.append('l');
+  str.append('o');
+
+  ASSERT_EQ(NULL, str.c_str());
+}

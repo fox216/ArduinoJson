@@ -30,10 +30,12 @@ class StaticJsonBufferBase : public JsonBuffer {
     }
 
     void append(char c) {
+      if (_parent._size >= _parent._capacity) return;
       _parent._buffer[_parent._size++] = c;
     }
 
     const char* c_str() const {
+      if (_parent._size >= _parent._capacity) return NULL;
       _parent._buffer[_parent._size++] = 0;
       return _start;
     }
