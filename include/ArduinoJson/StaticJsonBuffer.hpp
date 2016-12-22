@@ -21,31 +21,41 @@
 
 namespace ArduinoJson {
 
-// Implements a JsonBuffer with fixed memory allocation.
-// The template paramenter CAPACITY specifies the capacity of the buffer in
-// bytes.
-template <size_t CAPACITY>
-class StaticJsonBuffer : public JsonBuffer {
+class StaticJsonBufferBase : public JsonBuffer {
  public:
-  explicit StaticJsonBuffer() : _size(0) {}
+  StaticJsonBufferBase(char* buffer, size_t capa)
+      : _buffer(buffer), _capacity(capa), _size(0) {}
 
   size_t capacity() const {
-    return CAPACITY;
+    return _capacity;
   }
   size_t size() const {
     return _size;
   }
 
   virtual void* alloc(size_t bytes) {
-    if (_size + bytes > CAPACITY) return NULL;
+    if (_size + bytes > _capacity) return NULL;
     void* p = &_buffer[_size];
     _size += round_size_up(bytes);
     return p;
   }
 
  private:
-  uint8_t _buffer[CAPACITY];
+  char* const _buffer;
+  const size_t _capacity;
   size_t _size;
+};
+
+// Implements a JsonBuffer with fixed memory allocation.
+// The template paramenter CAPACITY specifies the capacity of the buffer in
+// bytes.
+template <size_t CAPACITY>
+class StaticJsonBuffer : public StaticJsonBufferBase {
+ public:
+  explicit StaticJsonBuffer() : StaticJsonBufferBase(_buffer, CAPACITY) {}
+
+ private:
+  char _buffer[CAPACITY];
 };
 }
 
