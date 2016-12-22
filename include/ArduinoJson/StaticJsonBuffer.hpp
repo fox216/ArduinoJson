@@ -23,6 +23,26 @@ namespace ArduinoJson {
 
 class StaticJsonBufferBase : public JsonBuffer {
  public:
+  class String {
+   public:
+    String(StaticJsonBufferBase& parent) : _parent(parent) {
+      _start = parent._buffer + parent._size;
+    }
+
+    void append(char c) {
+      _parent._buffer[_parent._size++] = c;
+    }
+
+    const char* c_str() const {
+      _parent._buffer[_parent._size++] = 0;
+      return _start;
+    }
+
+   private:
+    StaticJsonBufferBase& _parent;
+    char* _start;
+  };
+
   StaticJsonBufferBase(char* buffer, size_t capa)
       : _buffer(buffer), _capacity(capa), _size(0) {}
 
@@ -38,6 +58,10 @@ class StaticJsonBufferBase : public JsonBuffer {
     void* p = &_buffer[_size];
     _size += round_size_up(bytes);
     return p;
+  }
+
+  String startString() {
+    return String(*this);
   }
 
  private:
