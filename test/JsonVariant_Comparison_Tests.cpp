@@ -94,25 +94,8 @@ TEST_F(JsonVariant_Comparison_Tests, UShort) {
 }
 
 TEST_F(JsonVariant_Comparison_Tests, String) {
-  // we make a copy of the string to make sure pointer comparison fails
-  char str[] = "hello";
-  JsonVariant variant = str;
-
-  ASSERT_TRUE(variant == "hello");
-  ASSERT_FALSE(variant != "hello");
-
-  ASSERT_TRUE(variant != "world");
-  ASSERT_FALSE(variant == "world");
-
-  ASSERT_TRUE("hello" == variant);
-  ASSERT_FALSE("hello" != variant);
-
-  ASSERT_TRUE("world" != variant);
-  ASSERT_FALSE("world" == variant);
-}
-
-TEST_F(JsonVariant_Comparison_Tests, RawJson) {
-  JsonVariant variant = RawJson("\"hello\"");
+  DynamicJsonBuffer jsonBuffer;
+  JsonVariant variant = jsonBuffer.parse("\"hello\"");
 
   ASSERT_TRUE(variant == "hello");
   ASSERT_FALSE(variant != "hello");
