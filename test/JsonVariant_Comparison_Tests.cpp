@@ -103,6 +103,12 @@ TEST_F(JsonVariant_Comparison_Tests, String) {
 
   ASSERT_TRUE(variant != "world");
   ASSERT_FALSE(variant == "world");
+
+  ASSERT_TRUE("hello" == variant);
+  ASSERT_FALSE("hello" != variant);
+
+  ASSERT_TRUE("world" != variant);
+  ASSERT_FALSE("world" == variant);
 }
 
 TEST_F(JsonVariant_Comparison_Tests, RawJson) {
@@ -113,4 +119,10 @@ TEST_F(JsonVariant_Comparison_Tests, RawJson) {
 
   ASSERT_TRUE(variant != "world");
   ASSERT_FALSE(variant == "world");
+
+  ASSERT_TRUE("hello" == variant);
+  ASSERT_FALSE("hello" != variant);
+
+  ASSERT_TRUE("world" != variant);
+  ASSERT_FALSE("world" == variant);
 }
