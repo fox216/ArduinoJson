@@ -93,7 +93,7 @@ TEST_F(JsonVariant_Comparison_Tests, UShort) {
   testValue<unsigned short>(122, 123, 124);
 }
 
-TEST_F(JsonVariant_Comparison_Tests, String) {
+TEST_F(JsonVariant_Comparison_Tests, StringLiteral) {
   DynamicJsonBuffer jsonBuffer;
   JsonVariant variant = jsonBuffer.parse("\"hello\"");
 
@@ -108,4 +108,21 @@ TEST_F(JsonVariant_Comparison_Tests, String) {
 
   ASSERT_TRUE("world" != variant);
   ASSERT_FALSE("world" == variant);
+}
+
+TEST_F(JsonVariant_Comparison_Tests, String) {
+  DynamicJsonBuffer jsonBuffer;
+  JsonVariant variant = jsonBuffer.parse("\"hello\"");
+
+  ASSERT_TRUE(variant == std::string("hello"));
+  ASSERT_FALSE(variant != std::string("hello"));
+
+  ASSERT_TRUE(variant != std::string("world"));
+  ASSERT_FALSE(variant == std::string("world"));
+
+  ASSERT_TRUE(std::string("hello") == variant);
+  ASSERT_FALSE(std::string("hello") != variant);
+
+  ASSERT_TRUE(std::string("world") != variant);
+  ASSERT_FALSE(std::string("world") == variant);
 }

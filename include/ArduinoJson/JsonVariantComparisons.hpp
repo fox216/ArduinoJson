@@ -24,8 +24,8 @@ struct JsonVariantComparer<
     TVariant, TString, typename TypeTraits::EnableIf<
                            Internals::StringFuncs<TString>::has_equals>::type> {
   static bool equals(const TVariant &variant, const TString &comparand) {
-    return Internals::StringFuncs<TString>::equals(
-        variant.template as<TString>(), comparand);
+    const char *value = variant.template as<const char *>();
+    return Internals::StringFuncs<TString>::equals(comparand, value);
   }
 };
 
