@@ -5,8 +5,8 @@
 // https://github.com/bblanchon/ArduinoJson
 // If you like this project, please add a star!
 
-#include <gtest/gtest.h>
 #include <ArduinoJson.h>
+#include <gtest/gtest.h>
 
 class JsonVariant_Comparison_Tests : public ::testing::Test {
  protected:
@@ -91,4 +91,26 @@ TEST_F(JsonVariant_Comparison_Tests, ULong) {
 
 TEST_F(JsonVariant_Comparison_Tests, UShort) {
   testValue<unsigned short>(122, 123, 124);
+}
+
+TEST_F(JsonVariant_Comparison_Tests, String) {
+  // we make a copy of the string to make sure pointer comparison fails
+  char str[] = "hello";
+  JsonVariant variant = str;
+
+  ASSERT_TRUE(variant == "hello");
+  ASSERT_FALSE(variant != "hello");
+
+  ASSERT_TRUE(variant != "world");
+  ASSERT_FALSE(variant == "world");
+}
+
+TEST_F(JsonVariant_Comparison_Tests, RawJson) {
+  JsonVariant variant = RawJson("\"hello\"");
+
+  ASSERT_TRUE(variant == "hello");
+  ASSERT_FALSE(variant != "hello");
+
+  ASSERT_TRUE(variant != "world");
+  ASSERT_FALSE(variant == "world");
 }
