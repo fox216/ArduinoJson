@@ -63,37 +63,44 @@ inline bool operator<=(const JsonVariantBase<TImpl> &left, TComparand right) {
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator<=(TComparand left, const JsonVariantBase<TImpl> &right) {
-  return left <= right.template as<TComparand>();
+inline bool operator<=(TComparand comparand,
+                       const JsonVariantBase<TImpl> &variant) {
+  return comparand <= variant.template as<TComparand>();
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator>=(const JsonVariantBase<TImpl> &left, TComparand right) {
-  return left.template as<TComparand>() >= right;
+inline bool operator>=(const JsonVariantBase<TImpl> &variant,
+                       TComparand comparand) {
+  return variant.template as<TComparand>() >= comparand;
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator>=(TComparand left, const JsonVariantBase<TImpl> &right) {
-  return left >= right.template as<TComparand>();
+inline bool operator>=(TComparand comparand,
+                       const JsonVariantBase<TImpl> &variant) {
+  return comparand >= variant.template as<TComparand>();
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator<(const JsonVariantBase<TImpl> &left, TComparand right) {
-  return left.template as<TComparand>() < right;
+inline bool operator<(const JsonVariantBase<TImpl> &varian,
+                      TComparand comparand) {
+  return varian.template as<TComparand>() < comparand;
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator<(TComparand left, const JsonVariantBase<TImpl> &right) {
-  return left < right.template as<TComparand>();
+inline bool operator<(TComparand comparand,
+                      const JsonVariantBase<TImpl> &variant) {
+  return comparand < variant.template as<TComparand>();
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator>(const JsonVariantBase<TImpl> &left, TComparand right) {
-  return left.template as<TComparand>() > right;
+inline bool operator>(const JsonVariantBase<TImpl> &variant,
+                      TComparand comparand) {
+  return variant.template as<TComparand>() > comparand;
 }
 
 template <typename TImpl, typename TComparand>
-inline bool operator>(TComparand left, const JsonVariantBase<TImpl> &right) {
-  return left > right.template as<TComparand>();
+inline bool operator>(TComparand comparand,
+                      const JsonVariantBase<TImpl> &variant) {
+  return comparand > variant.template as<TComparand>();
 }
 }
