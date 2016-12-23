@@ -1,6 +1,11 @@
 ArduinoJson: change log
 =======================
 
+HEAD
+----
+
+* Added `operator==` for `JsonVariant` and strings (issue #402)
+
 v5.7.3
 ------
 
