@@ -25,23 +25,23 @@ class StaticJsonBufferBase : public JsonBuffer {
  public:
   class String {
    public:
-    String(StaticJsonBufferBase& parent) : _parent(parent) {
-      _start = parent._buffer + parent._size;
+    String(StaticJsonBufferBase* parent) : _parent(parent) {
+      _start = parent->_buffer + parent->_size;
     }
 
     void append(char c) {
-      if (_parent._size >= _parent._capacity) return;
-      _parent._buffer[_parent._size++] = c;
+      if (_parent->_size >= _parent->_capacity) return;
+      _parent->_buffer[_parent->_size++] = c;
     }
 
     const char* c_str() const {
-      if (_parent._size >= _parent._capacity) return NULL;
-      _parent._buffer[_parent._size++] = 0;
+      if (_parent->_size >= _parent->_capacity) return NULL;
+      _parent->_buffer[_parent->_size++] = 0;
       return _start;
     }
 
    private:
-    StaticJsonBufferBase& _parent;
+    StaticJsonBufferBase* _parent;
     char* _start;
   };
 
@@ -63,7 +63,7 @@ class StaticJsonBufferBase : public JsonBuffer {
   }
 
   String startString() {
-    return String(*this);
+    return String(this);
   }
 
  private:

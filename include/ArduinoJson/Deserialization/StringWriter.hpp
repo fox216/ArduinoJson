@@ -14,26 +14,26 @@ class StringWriter {
  public:
   class String {
    public:
-    String(char*& ptr) : _writePtr(ptr), _startPtr(ptr) {}
+    String(char** ptr) : _writePtr(ptr), _startPtr(*ptr) {}
 
     void append(char c) {
-      *_writePtr++ = c;
+      *(*_writePtr)++ = c;
     }
 
     const char* c_str() const {
-      *_writePtr++ = 0;
+      *(*_writePtr)++ = 0;
       return _startPtr;
     }
 
    private:
-    char*& _writePtr;
-    char* const _startPtr;
+    char** _writePtr;
+    char* _startPtr;
   };
 
   StringWriter(char* buffer) : _ptr(buffer) {}
 
   String startString() {
-    return String(_ptr);
+    return String(&_ptr);
   }
 
  private:
